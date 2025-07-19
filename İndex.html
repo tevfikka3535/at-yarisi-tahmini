@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>At Yarışı Tahmin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #fafafa; }
+    h2 { color: #333; }
+    label { margin-top: 0.5rem; display: block; font-weight: 600; }
+    input, select { width: 100%; padding: 0.5rem; margin-top: 0.25rem; }
+    button { margin-top: 1rem; padding: 0.75rem; width: 100%; font-size: 1rem; }
+    #sonuc { margin-top: 1rem; font-size: 1.25rem; color: green; }
+  </style>
+</head>
+<body>
+  <h2>🐎 At Yarışı Tahmin</h2>
+  <div>
+    <label>At 1 Adı:<input type="text" id="isim1" value="Şimşek"></label>
+    <label>Form (0‑100):<input type="number" id="form1" value="80"></label>
+    <label>Jokey Tecrübesi (0‑100):<input type="number" id="jokey1" value="90"></label>
+    <label>Favori mi?<select id="favori1"><option value="true">Evet</option><option value="false">Hayır</option></select></label>
+  </div>
+  <div style="margin-top:1rem">
+    <label>At 2 Adı:<input type="text" id="isim2" value="Yıldırım"></label>
+    <label>Form (0‑100):<input type="number" id="form2" value="70"></label>
+    <label>Jokey Tecrübesi (0‑100):<input type="number" id="jokey2" value="85"></label>
+    <label>Favori mi?<select id="favori2"><option value="false">Hayır</option><option value="true">Evet</option></select></label>
+  </div>
+  <button onclick="tahmin()">Tahmin Et</button>
+  <div id="sonuc"></div>
+  <script>
+    function tahmin(){
+      const atlar = [1,2].map(i => ({
+        isim: document.getElementById('isim'+i).value,
+        form: +document.getElementById('form'+i).value,
+        jokey: +document.getElementById('jokey'+i).value,
+        favori: document.getElementById('favori'+i).value==='true'
+      }));
+      let max=-Infinity, kazanan='';
+      atlar.forEach(at => {
+        const puan = at.form + at.jokey + (at.favori ? 20 : 0);
+        if(puan>max){ max=puan; kazanan=at.isim; }
+      });
+      document.getElementById('sonuc').innerText = `Tahmin edilen: ${kazanan} 🏆 (Puan: ${max})`;
+    }
+  </script>
+</body>
+</html>
